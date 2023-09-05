@@ -40,6 +40,25 @@ def get_data_by_year(year):
     return jsonify(data)
 
 
+@app.route("/search", methods=["GET"])
+def search_data():
+    query = request.args.get("query")
+    if not query:
+        return jsonify({"error": "No query provided. Please provide a query in address bar"})
+
+    cur = conn.cursor()
+    try:
+        # Perform a partial text search in buyer_name, seller_name, or other_info columns
+        cur.execute("SELECT * FROM Scrapped_Data WHERE buyer_name ILIKE %s OR seller_name ILIKE %s OR other_information ILIKE %s", ('%' + query + '%', '%' + query + '%', '%' + query + '%'))
+        data = cur.fetchall()
+        cur.close()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+
+
+
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
