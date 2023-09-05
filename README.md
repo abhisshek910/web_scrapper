@@ -65,6 +65,7 @@ Before you begin, ensure you have met the following requirements:
 
 - `/api/by_doc_no/<doc_no>`: Search data by Document No.
 - `/api/by_year/<year>`: Search data by Year of Registration.
+- `/search?query<query>`: Partial Search.
 
 
 ## Note
